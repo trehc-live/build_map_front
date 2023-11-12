@@ -1,0 +1,148 @@
+.open_button
+{
+    background-color:#DCDCDC;
+    border-radius: 20px;
+    border: 3px solid transparent;
+	
+	display: block;
+	width: 90%;
+	height: 9%;
+	margin: 10px auto;
+	
+	cursor: pointer;
+	
+	pointer-events: auto;
+}
+.open_button:hover 
+{
+	background: #C0C0C0;
+}
+
+.open_button:focus 
+{
+	outline: none;
+	box-shadow: 0 0 0 4px #cbd6ee;
+}
+.app-wrapper
+{  
+    width: 90%;
+	margin: 10px auto;
+	padding: 7px;
+	display: none;
+	
+	z-index: 2;
+	
+	cursor: pointer;
+	background-color: rgba(250, 250, 250, 0.5);
+	border-radius: 20px;
+	
+	pointer-events: auto;
+	
+}
+#buttonText
+{
+	font-family: 'Trebuchet MS';
+	font-size: 8vw;
+	
+	margin: 0;
+}
+
+/* Layers */
+	layer
+	{
+		width: 100%;
+		height: 100%;
+		
+		position: fixed;
+		pointer-events: none;
+	}
+	#layer2
+	{
+		z-index: 2;
+	}
+
+/* CSS for path */
+	.pathContainer
+	{
+		display: flex;
+	}
+	.pathCircle
+	{
+		background-color: red;
+		border-radius: 50%;
+		display: inline-block;
+	}
+	.pathTextBox
+	{
+		width: 100%;
+		margin-left: 10px;
+	}
+	.pathInnerText
+	{
+		color: black;
+		font-size: 3vw;
+		font-family: 'Trebuchet MS';
+		display: table-cell;
+		vertical-align: middle;
+		
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		
+		user-select: none;
+	}
+	.pathLineHorisontal
+	{
+		height: 5px;
+		background-color: #FECC01;
+		border-radius: 99px;
+		position: relative;
+		left: 47.5px;
+	}
+	.pathLineHorisontal
+	{
+		height: 5px;
+		background-color: #FECC01;
+		border-radius: 99px;
+		position: relative;
+		left: 47.5px;
+	}
+	.pathLineVertical
+	{
+		width: 5px;
+		background-color: #FECC01;
+		border-radius: 99px;
+		margin-left: 47.5px;
+	}
+	.pathPicture
+	{
+		width: 55px; 
+		height: 55px;
+	}
+	.pathFlexMain
+	{
+		display: flex; 
+		width: 300px; 
+		height: 70px; 
+		margin-left: 0px;
+	}
+	.pathFlex1
+	{
+		display: flex;
+		width: 100px;
+		height: 70px;
+		margin-left: 0px;
+		flex-direction: column;
+	}
+	.pathFlex2
+	{
+		display: flex;
+		width: 59px;
+		height: 59px;
+		margin-left: 0px;
+		flex-direction: column;
+		border: 2px solid #73AD21;
+		border-radius: 3px;
+	}

@@ -1,0 +1,12 @@
+@media only screen and (min-width: 768px) 
+{
+	.pathInnerText
+	{
+		font-size: 2vw;
+	}
+	
+	#buttonText
+	{
+		font-size: 3vw;
+	}
+}

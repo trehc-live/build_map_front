@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Main</title>
+		<script src="js/legend.js"></script>
+		<link rel="stylesheet" href="css/legendMobile.css">
+		<link rel="stylesheet" href="css/legendDesktop.css">
+		<link rel="stylesheet" href="css/map.css">
+	</head>
+	<body id = "body_id">
+		<!--Layer 1>
+			<!--Map-->
+				
+		<!--Layer 2>-->
+			<layer id = "layer2">
+				<!--Legend-->
+					<button class="open_button" id="open_button" onclick="openbox('box')">
+						<p id = "buttonText">Открыть легенду</p>
+					</button> <!--Кнопка активатор-->
+					
+					<div class="app-wrapper" id="box">  <!--По умолчанию скрываем легенду и закрепляем за кнопкой(CSS)-->		
+						<div id="legendContainerId"></div>		
+					</div>
+			</layer>
+	</body>
+	<script type="text/javascript" src="js/map.js"></script>
+</html>
