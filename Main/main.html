@@ -2,8 +2,9 @@
 <html>
 	<head>
 		<title>Main</title>
-		<script src="js/legend.js"></script>
+		<link rel="stylesheet" href="css/searchMobile.css">
 		<link rel="stylesheet" href="css/legendMobile.css">
+		<link rel="stylesheet" href="css/searchDesktop.css">
 		<link rel="stylesheet" href="css/legendDesktop.css">
 		<link rel="stylesheet" href="css/map.css">
 	</head>
@@ -13,15 +14,33 @@
 				
 		<!--Layer 2>-->
 			<layer id = "layer2">
-				<!--Legend-->
-					<button class="open_button" id="open_button" onclick="openbox('box')">
-						<p id = "buttonText">Открыть легенду</p>
-					</button> <!--Кнопка активатор-->
-					
-					<div class="app-wrapper" id="box">  <!--По умолчанию скрываем легенду и закрепляем за кнопкой(CSS)-->		
-						<div id="legendContainerId"></div>		
-					</div>
+				<div class="pointer_events_enabler">
+					<!--Search-->
+						<input class="search_bar" id="search_bar_id" placeholder="Поиск" oninput="search_handler()" onclick="InpClick()">
+						<div id="hider">
+							<div onclick="ButtonClick()" class="button_test"><b>▼</b></div>
+							<div class="flex-container">
+								<div class="filters" id="filters" onchange="search_handler()">
+
+								</div>
+							</div>
+							
+							<div class="point_selector" id="point_selector">
+							
+							</div>
+						</div>
+					<!--Legend-->
+						<div class="open_button" id="open_button" onclick="openbox('box')">
+							<p id = "buttonText">Открыть легенду</p>
+						</div> <!--Кнопка активатор-->
+						
+						<div class="app-wrapper" id="box">  <!--По умолчанию скрываем легенду и закрепляем за кнопкой(CSS)-->		
+							<div id="legendContainerId"></div>		
+						</div>
+				</div>
 			</layer>
 	</body>
 	<script type="text/javascript" src="js/map.js"></script>
+	<script src="js/legend.js"></script>
+	<script src="js/search.js"></script>
 </html>

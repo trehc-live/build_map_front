@@ -1,18 +1,21 @@
 .open_button
-{
-    background-color:#DCDCDC;
-    border-radius: 20px;
-    border: 3px solid transparent;
-	
-	display: block;
-	width: 90%;
-	height: 9%;
-	margin: 10px auto;
+{	
+	display: none;
+	width: 100%;
+	height: 120px;
 	
 	cursor: pointer;
 	
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+}
+
+.pointer_events_enabler
+{
 	pointer-events: auto;
 }
+
 .open_button:hover 
 {
 	background: #C0C0C0;
@@ -25,18 +28,14 @@
 }
 .app-wrapper
 {  
-    width: 90%;
-	margin: 10px auto;
-	padding: 7px;
+    width: 100%;
+	height: calc(100vh - 222px);
 	display: none;
 	
 	z-index: 2;
 	
 	cursor: pointer;
-	background-color: rgba(250, 250, 250, 0.5);
-	border-radius: 20px;
-	
-	pointer-events: auto;
+	background-color: #c0c0c0;
 	
 }
 #buttonText
@@ -62,15 +61,37 @@
 	}
 
 /* CSS for path */
+
+	#legendContainerId
+	{
+		padding-top: 40px;
+		width: 100%;
+		overflow-y: scroll;
+	}
 	.pathContainer
 	{
 		display: flex;
+		background-color: #ffffff;
+		height: 150px;
+		text-align: center;
+		justify-content: center;
+		align-items: center;
+		margin-bottom: 6px;
+	}
+	.pathContainer:hover 
+	{
+		background-color: #eeeeff;
 	}
 	.pathCircle
 	{
-		background-color: red;
+		background-color: gray;
 		border-radius: 50%;
 		display: inline-block;
+		margin-left: 12.5px;
+		flex-shrink: 0;
+		transform-style: preserve-3d;
+		height: 100px;
+		width: 100px;
 	}
 	.pathTextBox
 	{
@@ -80,18 +101,10 @@
 	.pathInnerText
 	{
 		color: black;
-		font-size: 3vw;
+		font-size: 250%;
 		font-family: 'Trebuchet MS';
 		display: table-cell;
 		vertical-align: middle;
-		
-		-webkit-touch-callout: none;
-		-webkit-user-select: none;
-		-khtml-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-		
-		user-select: none;
 	}
 	.pathLineHorisontal
 	{
@@ -101,20 +114,25 @@
 		position: relative;
 		left: 47.5px;
 	}
-	.pathLineHorisontal
-	{
-		height: 5px;
-		background-color: #FECC01;
-		border-radius: 99px;
-		position: relative;
-		left: 47.5px;
-	}
+	/* .pathLineHorisontal */
+	/* { */
+		/* height: 5px; */
+		/* background-color: #FECC01; */
+		/* border-radius: 99px; */
+		/* position: relative; */
+		/* left: 47.5px; */
+	/* } */
 	.pathLineVertical
 	{
-		width: 5px;
-		background-color: #FECC01;
+		width: 30px;
+		height: 200px;
+		background-color: #555555;
 		border-radius: 99px;
-		margin-left: 47.5px;
+		margin-left: 64px;
+		position: relative;
+		right: 30px;
+		top: 12.5px;
+		transform: translateZ(-1px);
 	}
 	.pathPicture
 	{
@@ -126,14 +144,12 @@
 		display: flex; 
 		width: 300px; 
 		height: 70px; 
-		margin-left: 0px;
 	}
 	.pathFlex1
 	{
 		display: flex;
 		width: 100px;
 		height: 70px;
-		margin-left: 0px;
 		flex-direction: column;
 	}
 	.pathFlex2
@@ -141,7 +157,6 @@
 		display: flex;
 		width: 59px;
 		height: 59px;
-		margin-left: 0px;
 		flex-direction: column;
 		border: 2px solid #73AD21;
 		border-radius: 3px;

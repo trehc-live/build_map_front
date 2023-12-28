@@ -1,12 +1,46 @@
-@media only screen and (min-width: 768px) 
+@media screen and (pointer: fine)
 {
+	.open_button
+	{
+		height: 60px;
+	}
+	
 	.pathInnerText
 	{
-		font-size: 2vw;
+		font-size: 200%;
 	}
 	
 	#buttonText
 	{
-		font-size: 3vw;
+		font-size: 250%;
+	}
+	
+	.app-wrapper
+	{
+		height: calc(100vh - 103px);
+	}
+	
+	.pathContainer
+	{
+		height: 75px;
+		margin-bottom: 3px;
+	}
+	
+	.pathCircle
+	{
+		height: 50px;
+		width: 50px;
+	}
+	
+	.pathLineVertical
+	{
+		width: 15px;
+		height: 100px;
+		margin-left: 47.5px;
+	}
+	
+	#legendContainerId
+	{
+		padding-top: 20px;
 	}
 }

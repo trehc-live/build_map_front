@@ -14,22 +14,25 @@ body
 	justify-content: center;
 	
 	touch-action: none;
-	cursor: grab;
+	/* cursor: grab; */
+	
+	font-family: sans-serif;
 }
 
 html
 {
 	overflow: hidden;
-}
-
-#svg_id
-{
-	touch-action: none;
+	
 	-webkit-user-select: none;
 	-khtml-user-select: none;
 	-moz-user-select: none;
 	-o-user-select: none;
 	user-select: none;
+}
+
+#svg_id
+{
+	touch-action: none;
 
 	pointer-events: none;
 	cursor: grab;

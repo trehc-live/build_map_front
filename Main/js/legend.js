@@ -10,14 +10,19 @@
 	end_point_id: ''
 	};
 	
+	let legend_len = 0;
+	let legend_current = -1;
+	
 	//global vars
 
-	function parse_pathname()
+	function get_params()
 	{
 		let url = new URL(document.location.href);
-		url_params.building_id = 1//url.searchParams.get('building_id');
-		url_params.current_position = 1//url.searchParams.get('target_id');
-		url_params.end_point_id = 3//url.searchParams.get('end_point_id');
+		url_params.building_id = url.searchParams.get('building_id');
+		url_params.current_position = url.searchParams.get('target_id');
+		//
+		//url_params.end_point_id = 3//url.searchParams.get('end_point_id');
+		url_params.end_point_id = sessionStorage.getItem("end_point_id");
 		
 		if(url_params.building_id == undefined || url_params.current_position == undefined || url_params.end_point_id == undefined)
 		{
@@ -33,7 +38,6 @@
 	{
 		container.id = 'cont' + searchID;
 		container.classList.add('pathContainer');
-		container.style.cssText += 'height: ' + (wah + 5) + 'px; margin-left:' + margin + 'px;';
 		document.getElementById("legendContainerId").appendChild(container);
 	}
 	
@@ -41,8 +45,12 @@
 	{
 		circle.id = 'circl' + searchID;
 		circle.classList.add('pathCircle');
-        circle.style.cssText += 'width: ' + wah + 'px; height: ' + wah + 'px;';
         document.getElementById(container.id).appendChild(circle);
+		if(searchID != legend_len - 1)
+		{
+			vertical_line(70, 10, 'circl' + searchID);
+		}
+		
 	}
 	
 	function fill_textBox_options(textBox, searchID, container)
@@ -73,27 +81,40 @@
         const innerText = document.createElement("p");
         fill_innerText_options(innerText, i, textBox);
 		
-		let text = document.getElementById('tbox' + i);
-		text.onclick = function() {
-			for(let id = 0; id <= i; id++)
+		let cont = document.getElementById('cont' + i);
+		cont.onclick = function() {
+			if(legend_current != i)
 			{
-				document.getElementById('circl' + id).style.backgroundColor = 'green';
+				for(let id = 0; id <= i; id++)
+				{
+					document.getElementById('circl' + id).style.backgroundColor = '#1500FF';
+					if(id != i)
+					{
+						document.getElementById('circl' + id).firstChild.style.backgroundColor = '#120070';
+					}			
+				}
+				for(let id = i + 1; id < legend_len; id++)
+				{
+					document.getElementById('circl' + id).style.backgroundColor = 'gray';
+					if(id != legend_len - 1)
+					{
+						document.getElementById('circl' + id).firstChild.style.backgroundColor = '#555555';
+					}
+					if(id == i + 1)
+					{
+						document.getElementById('circl' + (id - 1)).firstChild.style.backgroundColor = '#555555';
+					}
+				}
+				legend_current = i;
 			}
-			for(let id = i + 1; id < searchArray.length; id++)
+			else
 			{
-				document.getElementById('circl' + id).style.backgroundColor = 'red';
-			}
-		};
-		
-		let div = document.getElementById('circl' + i);
-		div.onclick = function() {
-			for(let id = 0; id <= i; id++)
-			{
-				document.getElementById('circl' + id).style.backgroundColor = 'green';
-			}
-			for(let id = i + 1; id < searchArray.length; id++)
-			{
-				document.getElementById('circl' + id).style.backgroundColor = 'red';
+				document.getElementById('circl' + i).style.backgroundColor = 'gray';
+				if(i > 0)
+				{
+					document.getElementById('circl' + (i - 1)).firstChild.style.backgroundColor = '#555555';
+				}
+				legend_current = i - 1;
 			}
 		};
 	}
@@ -110,34 +131,33 @@
 	{
         const line = document.createElement("div");
 		line.classList.add('pathLineVertical');
-        line.style.cssText += 'height: ' + length + 'px; margin-top: ' + tbm + 'px; margin-bottom: ' + tbm + 'px';
         document.getElementById(appendID).appendChild(line);
 	}
 	
 	//{ ADDITIONAL_PLACE_CONTENT -->
-	function clickable_picture(linke, searchID)
-	{
-		const picture = document.createElement("img");
-		picture.id = 'pic' + searchID;
-		picture.classList.add('pathPicture');
-		picture.src = linke;
-		document.getElementById("flexIDB" + searchID).appendChild(picture);
-		let modal = document.getElementById('myModal');
-		let img = document.getElementById('myImg');
-		let modalImg = document.getElementById("img01");
-		document.getElementById('pic' + searchID).onclick = function()
-		{
-			modal.style.display = "block";
-			modalImg.src = this.src;
-		}
-		// Get the <span> element that closes the modal
-		let img01 = document.getElementsByClassName("modal-content")[0];
+	// function clickable_picture(linke, searchID)
+	// {
+		// const picture = document.createElement("img");
+		// picture.id = 'pic' + searchID;
+		// picture.classList.add('pathPicture');
+		// picture.src = linke;
+		// document.getElementById("flexIDB" + searchID).appendChild(picture);
+		// let modal = document.getElementById('myModal');
+		// let img = document.getElementById('myImg');
+		// let modalImg = document.getElementById("img01");
+		// document.getElementById('pic' + searchID).onclick = function()
+		// {
+			// modal.style.display = "block";
+			// modalImg.src = this.src;
+		// }
+		// // Get the <span> element that closes the modal
+		// let img01 = document.getElementsByClassName("modal-content")[0];
 		
-		// When the user clicks on <span> (x), close the modal
-		img01.onclick = function() { 
-			modal.style.display = "none";
-		}
-	}
+		// // When the user clicks on <span> (x), close the modal
+		// img01.onclick = function() { 
+			// modal.style.display = "none";
+		// }
+	// }
 	
 	function flexbox2_create(searchID)
 	{
@@ -164,16 +184,16 @@
 	}
 	// <--ADDITIONAL_PLACE_CONTENT }
 	
-	function create_place_on_way(searchID, URL)
-	{
-		flexbox_main_create(searchID);
-		flexbox1_create(searchID);
-		vertical_line(35, -4, 'flexIDA' + searchID);
-		horisontal_line(50, 0, 'flexIDA' + searchID);
-		flexbox2_create(searchID);
-		clickable_picture("https://ih1.redbubble.net/image.719306492.2984/st,small,507x507-pad,600x600,f8f8f8.jpg", searchID);
-		vertical_line(35, -4, 'flexIDA' + searchID);
-	}
+	// function create_place_on_way(searchID, URL)
+	// {
+		// flexbox_main_create(searchID);
+		// flexbox1_create(searchID);
+		// vertical_line(35, -4, 'flexIDA' + searchID);
+		// horisontal_line(50, 0, 'flexIDA' + searchID);
+		// flexbox2_create(searchID);
+		//clickable_picture("https://ih1.redbubble.net/image.719306492.2984/st,small,507x507-pad,600x600,f8f8f8.jpg", searchID);
+		// vertical_line(35, -4, 'flexIDA' + searchID);
+	// }
 	
 	// <--PAINT_OBJECTS_THINGS }
 	
@@ -182,7 +202,7 @@
 	{
 		if(searchArray[searchID].point.point_type == type)//target
 		{
-			create_place_on_way(searchID, pictureURL);
+			//create_place_on_way(searchID, pictureURL);
 			return;
 		}
 	}
@@ -194,7 +214,7 @@
 		{
 			create_dot_with_header(searchID, 50, 25);
 			//point_type_handler(searchID, 'target', '');
-			vertical_line(70, 10, 'legendContainerId');
+			//vertical_line(70, 10, 'legendContainerId');
 			return;
 		}
 		if(searchID == searchArray.length - 1)//end header
@@ -205,14 +225,14 @@
 		}
 		if(searchArray[searchID].point.point_type == 'crossroads')//crossroads
 		{
-			create_dot_with_header(searchID, 30, 35);
-			vertical_line(70, 10, 'legendContainerId');
+			create_dot_with_header(searchID, 50, 35);
+			//vertical_line(70, 10, 'legendContainerId');
 			return;
 		}
 		if(searchArray[searchID].point.point_type == 'target')//target
 		{
-			create_dot_with_header(searchID, 30, 35);
-			create_place_on_way(searchID, '');
+			create_dot_with_header(searchID, 50, 35);
+			//create_place_on_way(searchID, '');
 			return;
 		}
 	}
@@ -221,7 +241,7 @@
 	// { CHANGE_LIST -->
 	function fill_legend_list()
 	{
-		for(let i = 0; i < searchArray.length; i++)
+		for(let i = 0; i < legend_len; i++) //searchArray.length
 		{
 			targets_on_way_handler(i);
 		}
@@ -232,6 +252,7 @@
 	function search_parse(response)
 	{
 		let jsonData = JSON.parse(response);
+		legend_len = jsonData.search_result.length;
 		for (let i = 0; i < jsonData.search_result.length; i++)
 		{
 			searchArray[i] = jsonData.search_result[i];
@@ -239,42 +260,43 @@
 	}
 	// <--PARSE }
 	
+	function clear_legend()
+	{
+		var elem = document.getElementById('legendContainerId');
+		elem.innerHTML = "";
+		console.log('clear!')
+	}
+	
 	//{ RESPONSE_THINGS -->
 	function search_response_handler(response)
 	{
+		clear_legend();
 		search_parse(response);
 		fill_legend_list();
 	}
 	// <--RESPONSE_THINGS }
 
+	function build_get_legend_url()
+	{
+		return `buildings/${request_params.building_id}/search?start_point_id=${url_params.current_position}&end_point_id=${url_params.end_point_id}`;
+	}
+
 	//{ REQUEST_THINGS -->
 	function search_request()
 	{
-		let GETRequestStr = baseURL + url_params.building_id + '/search?start_point_id=' + url_params.current_position + '&end_point_id=' + url_params.end_point_id;
+		legend_current = -1;
+		const request_url = new URL(build_get_legend_url(), base_api_url);
+		console.log(request_url);
 		const xhr = new XMLHttpRequest();
-		xhr.open('GET', GETRequestStr, false);
+		xhr.open('GET', request_url, false);
 		xhr.send();
 		//console.log(end_point_id);															//to check
-		//console.log(GETRequestStr);															//to check
+		//console.log(request_url);															//to check
 		console.log(xhr.response);															//to check
 		search_response_handler(xhr.response);
 	}
 	// <--REQUEST_THINGS }
 
-	//{ MAIN -->
-	function main()
-	{
-		parse_pathname();
-		search_request();
-	}
-	// <--MAIN }
-	//function chpok(ButtonForLegend)
-	//{
-	//	elem = document.getElementById(ButtonForLegend); //находим блок div по его id, который передали в функцию
-	//	state = elem.style.display; //смотрим, включен ли сейчас элемент
-	//	if (state =='') elem.style.display='none'; //если включен, то выключаем
-	//	else elem.style.display=''; //иначе - включаем
-	//}
 	function openbox(box)
 	{
 		let buttonTextVar = document.getElementById("buttonText");
@@ -285,19 +307,19 @@
 		display	= buttonStyle.display// Получаем состояние элемента и меняем в зависимости от значения
 		if(display=="none")
 		{
-			document.getElementById('box').style.display="block"; 
-			document.getElementById(button_id).style.backgroundColor="#808080";
+			document.getElementById('box').style.display="flex"; 
+			document.getElementById(button_id).style.backgroundColor="#AAFFAA";
 			buttonTextVar.textContent = "Скрыть легенду";
 		}
 		else
 		{
 			document.getElementById('box').style.display="none";
-			document.getElementById(button_id).style.backgroundColor="#DCDCDC";
+			document.getElementById(button_id).style.backgroundColor="#FFFFFF";
 			buttonTextVar.textContent = "Открыть легенду";
 		}
 	}
 	
-	window.onload = function(){ 
-    console.log("document.onload");  
-    main(); 
-  }
+	//{ MAIN -->
+		//parse_pathname();
+		//search_request();
+	// <--MAIN }
