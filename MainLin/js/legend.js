@@ -257,6 +257,7 @@
 		{
 			searchArray[i] = jsonData.search_result[i];
 		}
+		draw_seq(searchArray);
 	}
 	// <--PARSE }
 	

@@ -26,7 +26,8 @@
 		
 		let templates =
 		{
-			circle: [["cx", 750], ["cy", 310], ["r", r], ["stroke", "black"], ["stroke-width", 2]],
+			circle: [["r", r], ["stroke", "black"], ["stroke-width", 2]],
+			group: [["class", "layer"]],
 		}
 	
 	//Classes
@@ -50,37 +51,38 @@
 			container.append(svg_elem);
 		
 		//Draw on map
-			let draw_group = draw("g", svg_elem, undefined, undefined, [["class", "layer"]]);
-			let draw_title = draw("title", draw_group, "Draw", undefined, undefined);
-			let start_point = draw("circle", draw_group, undefined, templates.circle, [["fill", "green"]]);
-			let point = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+			//Create group for drawing
+				let draw_group = draw("g", svg_elem, undefined, templates.group, undefined);
+				let draw_title = draw("title", draw_group, "Draw", undefined, undefined);
+				
+			//Create starting point
+				let start_coords = get_start_svg_coords();
+				let start_point = draw("circle", draw_group, undefined, templates.circle, [["cx", start_coords.x], ["cy", start_coords.y], ["fill", "green"]]);
+				let start_viewport_coords = start_point.getBoundingClientRect()
 			
-			let point_coords = point.getBoundingClientRect()
-		
+			//Create group for updatable drawing
+				let removable_group = draw("g", draw_group, undefined, templates.group, undefined);
+				let removable_title = draw("title", removable_group, "Things to remove when a new end point is selected", undefined, undefined);
+			
 	//Move
-
 		let initial = new XY();
-		let current = new XY(-point_coords.x - r + w / 2, -point_coords.y - r + h / 2);
+		let current = new XY(-start_viewport_coords.x - r + w / 2, -start_viewport_coords.y - r + h / 2);
 		let scaling = false;
 		let active = false;
-	
-		//let finger_distance;
-
-
-//EventListeners
-
-	//Mobile
-		container.addEventListener("touchstart", drag_start, false);
-		container.addEventListener("touchmove", drag, false);
-		container.addEventListener("touchend", drag_end, false);
-
-	//Desktop
-		container.addEventListener("mousedown", drag_start, false);
-		container.addEventListener("mousemove", drag, false);
-		container.addEventListener("mouseup", drag_end, false);
-		document.addEventListener("wheel", mouse_wheel, false);
-
 		translate_set(current.x, current.y, svg_elem);
+
+	//EventListeners
+
+		//Mobile
+			container.addEventListener("touchstart", drag_start, false);
+			container.addEventListener("touchmove", drag, false);
+			container.addEventListener("touchend", drag_end, false);
+
+		//Desktop
+			container.addEventListener("mousedown", drag_start, false);
+			container.addEventListener("mousemove", drag, false);
+			container.addEventListener("mouseup", drag_end, false);
+			document.addEventListener("wheel", mouse_wheel, false);
 		
 //Functions
 
@@ -195,6 +197,15 @@
 			return json_map_svg_data;
 		}
 		
+		function get_start_svg_coords()
+		{
+			let params = build_get_point_by_id_url();
+			let url = new URL(params, base_api_url);
+			let resp = request(url);
+			let json = JSON.parse(resp)[0];
+			return new XY(json.x_value / scale_divisor, json.y_value / scale_divisor);
+		}
+		
 	//URL
 		function parse_pathname()
 		{
@@ -241,4 +252,18 @@
 			}
 		}
 		
-		
+		function draw_seq(point_array)
+		{
+			let circle_array = removable_group.querySelectorAll("circle");
+			
+			for (let i = 0; i < circle_array.length; i++)
+			{
+				circle_array[i].remove();
+			}
+			
+			for (let i = 1; i < legend_len; i++)
+			{
+				let point_data = point_array[i].point;
+				let removable_point = draw("circle", removable_group, undefined, templates.circle, [["cx", point_data.x_value / scale_divisor], ["cy", point_data.y_value / scale_divisor], ["fill", "purple"]]);
+			}
+		}
