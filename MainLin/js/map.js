@@ -7,12 +7,26 @@
 			building_id: '', 
 			target_id: ''
 		};
+		
+		colors =
+		{
+			circle_blue: "#1500FF",
+			road_blue: "#120070",
+			circle_gray: "gray",
+			road_gray: "#555555",
+			circle_dark_green: "#2E7D33",
+			circle_light_green: "#3BD445",
+			light_green: "AAFFAA",
+			white: "#FFFFFF",
+		};
 			
 	//Const
 		const container = document.getElementById("body_id");
 		const w = window.innerWidth;
 		const h = window.innerHeight;
 		const r = 8; //Default circle radius
+		const cw = 2; //Default circle stroke width
+		const lw = 2; //Default line stroke width
 		const scale_divisor = 1000; //Divides coordinates used for drawing circles
 		
 	//Objects
@@ -26,7 +40,8 @@
 		
 		let templates =
 		{
-			circle: [["r", r], ["stroke", "black"], ["stroke-width", 2]],
+			circle: [["r", r], ["stroke", "black"], ["stroke-width", cw]],
+			road: [["stroke-width", lw]],
 			group: [["class", "layer"]],
 		}
 	
@@ -52,18 +67,18 @@
 		
 		//Draw on map
 			//Create group for drawing
-				let draw_group = draw("g", svg_elem, undefined, templates.group, undefined);
-				let draw_title = draw("title", draw_group, "Draw", undefined, undefined);
+				let draw_group = create_default_group(svg_elem, "Draw");
 				
 			//Create starting point
 				let start_coords = get_start_svg_coords();
-				let start_point = draw("circle", draw_group, undefined, templates.circle, [["cx", start_coords.x], ["cy", start_coords.y], ["fill", "green"]]);
-				let start_viewport_coords = start_point.getBoundingClientRect()
+				let start_point = draw("circle", draw_group, undefined, templates.circle, [["cx", start_coords.x], ["cy", start_coords.y], ["fill", colors.circle_dark_green]]);
+				let start_viewport_coords = start_point.getBoundingClientRect();
 			
 			//Create group for updatable drawing
-				let removable_group = draw("g", draw_group, undefined, templates.group, undefined);
-				let removable_title = draw("title", removable_group, "Things to remove when a new end point is selected", undefined, undefined);
-			
+				let removable_group = create_default_group(draw_group, "Things to remove when a new end point is selected");	
+				let road_group = create_default_group(removable_group, "Roads");
+				let circle_group = create_default_group(removable_group, "Circles");
+				
 	//Move
 		let initial = new XY();
 		let current = new XY(-start_viewport_coords.x - r + w / 2, -start_viewport_coords.y - r + h / 2);
@@ -254,16 +269,46 @@
 		
 		function draw_seq(point_array)
 		{
-			let circle_array = removable_group.querySelectorAll("circle");
+			let previous_coord = start_coords;
 			
-			for (let i = 0; i < circle_array.length; i++)
-			{
-				circle_array[i].remove();
-			}
+			remove_elems(circle_group, "circle");
+			remove_elems(road_group, "line");
 			
-			for (let i = 1; i < legend_len; i++)
+			for (let i = 0; i < legend_len; i++)
 			{
 				let point_data = point_array[i].point;
-				let removable_point = draw("circle", removable_group, undefined, templates.circle, [["cx", point_data.x_value / scale_divisor], ["cy", point_data.y_value / scale_divisor], ["fill", "purple"]]);
+				if (i > 0)
+				{
+					let removable_line = draw("line", road_group, undefined, templates.road, [["x1", previous_coord.x], ["y1", previous_coord.y], ["x2", point_data.x_value / scale_divisor], ["y2", point_data.y_value / scale_divisor], ["stroke", colors.road_gray]]);
+					let removable_point = draw("circle", circle_group, undefined, templates.circle, [["cx", point_data.x_value / scale_divisor], ["cy", point_data.y_value / scale_divisor], ["fill", colors.circle_gray]]);
+				}	
+				else
+				{
+					let removable_point = draw("circle", circle_group, undefined, templates.circle, [["cx", point_data.x_value / scale_divisor], ["cy", point_data.y_value / scale_divisor], ["fill", colors.circle_dark_green]]);
+				}
+				
+				previous_coord = new XY(point_data.x_value / scale_divisor, point_data.y_value / scale_divisor);
 			}
+		}
+		
+		function remove_elems(parent, elem_name)
+		{
+			let elem_array = parent.querySelectorAll(elem_name);
+			for (let i = 0; i < elem_array.length; i++)
+			{
+				elem_array[i].remove();
+			}
+		}
+		
+		function change_color(parent, elem_name, mode, color, i)
+		{
+			let elem_array = parent.querySelectorAll(elem_name);
+			elem_array[i].setAttribute(mode, color);
+		}
+		
+		function create_default_group(append, name)
+		{
+			let group = draw("g", append, undefined, templates.group, undefined);
+			let group_title = draw("title", group, name, undefined, undefined);
+			return group;
 		}
