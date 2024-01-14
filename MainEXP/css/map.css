@@ -30,7 +30,7 @@ html
 	user-select: none;
 }
 
-#svg_id
+svg
 {
 	touch-action: none;
 

@@ -7,24 +7,25 @@
 		<link rel="stylesheet" href="css/searchDesktop.css">
 		<link rel="stylesheet" href="css/legendDesktop.css">
 		<link rel="stylesheet" href="css/map.css">
+		<meta charset="utf-8">
 	</head>
 	<body id = "body_id">
 		<!--Layer 1>
 			<!--Map-->
-				
 		<!--Layer 2>-->
 			<layer id = "layer2">
 				<div class="pointer_events_enabler">
-					<!--Search-->
+					<div id='search_and_legend'><!--we better change this cringe name-->
+						<!--Search-->
 						<input class="search_bar" id="search_bar_id" placeholder="Поиск" oninput="search_handler()" onclick="InpClick()">
 						<div id="hider">
 							<div onclick="ButtonClick()" class="button_test"><b>▼</b></div>
 							<div class="flex-container">
 								<div class="filters" id="filters" onchange="search_handler()">
-
+									
 								</div>
 							</div>
-							
+						
 							<div class="point_selector" id="point_selector">
 							
 							</div>
@@ -37,6 +38,7 @@
 						<div class="app-wrapper" id="box">  <!--По умолчанию скрываем легенду и закрепляем за кнопкой(CSS)-->		
 							<div id="legendContainerId"></div>		
 						</div>
+					</div>
 				</div>
 			</layer>
 	</body>

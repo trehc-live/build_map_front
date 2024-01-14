@@ -60,6 +60,14 @@
 		z-index: 2;
 	}
 
+	#search_and_legend
+	{
+		position: relative;
+		top: 20px;
+		border-radius: 20px;
+		overflow: hidden;
+	}
+
 /* CSS for path */
 
 	#legendContainerId
