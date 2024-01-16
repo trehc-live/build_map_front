@@ -169,6 +169,7 @@
 	{
 		let elem = document.getElementById('hider');
 		hider.style.display = "block";
+		zoom.enabled = false;
 	}
 	
 	function change_legend_style()//название ОЧЕНЬ СТОИТ поменять!
@@ -191,7 +192,8 @@
 		document.getElementById('open_button').style.display="none";
 		document.getElementById('box').style.display="none";
 		document.getElementById(button_id).style.backgroundColor="#FFFFFF";
-		buttonTextVar.textContent = "Открыть легенду";	
+		buttonTextVar.textContent = "Открыть легенду";
+		zoom.enabled = true;
 	}
 	
 	function openLegend()
@@ -206,6 +208,7 @@
 		document.getElementById('box').style.display="flex";
 		document.getElementById(button_id).style.backgroundColor="#AAFFAA";
 		buttonTextVar.textContent = "Скрыть легенду";
+		zoom.enabled = false;
 	}
 	
 	//Main

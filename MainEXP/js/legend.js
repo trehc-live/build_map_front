@@ -349,12 +349,14 @@
 			document.getElementById('box').style.display="flex"; 
 			document.getElementById(button_id).style.backgroundColor = colors.light_green;
 			buttonTextVar.textContent = "Скрыть легенду";
+			zoom.enabled = false;
 		}
 		else
 		{
 			document.getElementById('box').style.display="none";
 			document.getElementById(button_id).style.backgroundColor = colors.white;
 			buttonTextVar.textContent = "Открыть легенду";
+			zoom.enabled = true;
 		}
 	}
 	

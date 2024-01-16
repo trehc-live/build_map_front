@@ -36,6 +36,7 @@
 			speed: 0.1,
 			max: 5,
 			min: 0.5,
+			enabled: true,
 		}
 		
 		let templates =
@@ -153,30 +154,33 @@
 	//Zoom
 		function mouse_wheel(e) 
 		{
-			//Change zoom
-				if (e.deltaY > 0) //zoom out
-				{
-					if (zoom.current + zoom.speed > zoom.min)
+			if (zoom.enabled)
+			{
+				//Change zoom
+					if (e.deltaY > 0) //zoom out
 					{
-						zoom.current -= zoom.speed * zoom.current;
-					}
-				} 
-				else //zoom in
-				{
-					if (zoom.current - zoom.speed < zoom.max)
+						if (zoom.current + zoom.speed > zoom.min)
+						{
+							zoom.current -= zoom.speed * zoom.current;
+						}
+					} 
+					else //zoom in
 					{
-						zoom.current += zoom.speed * zoom.current;
+						if (zoom.current - zoom.speed < zoom.max)
+						{
+							zoom.current += zoom.speed * zoom.current;
+						}
 					}
-				}
-			
-			//Update map position while scaling
-				initial.x = e.clientX - current.x * zoom.current;
-				initial.y = e.clientY - current.y * zoom.current;
 				
-				current.x = (e.clientX - initial.x) / zoom.current;
-				current.y = (e.clientY - initial.y) / zoom.current;
-				
-				translate_set(current.x, current.y, svg_elem);
+				//Update map position while scaling
+					initial.x = e.clientX - current.x * zoom.current;
+					initial.y = e.clientY - current.y * zoom.current;
+					
+					current.x = (e.clientX - initial.x) / zoom.current;
+					current.y = (e.clientY - initial.y) / zoom.current;
+					
+					translate_set(current.x, current.y, svg_elem);
+			}
 		}
 		
 	//API
