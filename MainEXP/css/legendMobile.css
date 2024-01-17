@@ -1,0 +1,171 @@
+.open_button
+{	
+	display: none;
+	width: 100%;
+	height: 120px;
+	
+	cursor: pointer;
+	
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+}
+
+.pointer_events_enabler
+{
+	pointer-events: auto;
+}
+
+.open_button:hover 
+{
+	background: #C0C0C0;
+}
+
+.open_button:focus 
+{
+	outline: none;
+	box-shadow: 0 0 0 4px #cbd6ee;
+}
+.app-wrapper
+{  
+    width: 100%;
+	height: calc(100vh - 222px);
+	display: none;
+	
+	z-index: 2;
+	
+	cursor: pointer;
+	background-color: #c0c0c0;
+	
+}
+#buttonText
+{
+	font-family: 'Trebuchet MS';
+	font-size: 8vw;
+	
+	margin: 0;
+}
+
+/* Layers */
+	layer
+	{
+		width: 100%;
+		height: 100%;
+		
+		position: fixed;
+		pointer-events: none;
+	}
+	#layer2
+	{
+		z-index: 2;
+	}
+
+	#search_and_legend
+	{
+		position: relative;
+		top: 20px;
+		border-radius: 20px;
+		overflow: hidden;
+	}
+
+/* CSS for path */
+
+	#legendContainerId
+	{
+		padding-top: 40px;
+		width: 100%;
+		overflow-y: scroll;
+	}
+	.pathContainer
+	{
+		display: flex;
+		background-color: #ffffff;
+		height: 150px;
+		text-align: center;
+		justify-content: center;
+		align-items: center;
+		margin-bottom: 6px;
+	}
+	.pathContainer:hover 
+	{
+		background-color: #eeeeff;
+	}
+	.pathCircle
+	{
+		background-color: gray;
+		border-radius: 50%;
+		display: inline-block;
+		margin-left: 12.5px;
+		flex-shrink: 0;
+		transform-style: preserve-3d;
+		height: 100px;
+		width: 100px;
+	}
+	.pathTextBox
+	{
+		width: 100%;
+		margin-left: 10px;
+	}
+	.pathInnerText
+	{
+		color: black;
+		font-size: 250%;
+		font-family: 'Trebuchet MS';
+		display: table-cell;
+		vertical-align: middle;
+	}
+	.pathLineHorisontal
+	{
+		height: 5px;
+		background-color: #FECC01;
+		border-radius: 99px;
+		position: relative;
+		left: 47.5px;
+	}
+	/* .pathLineHorisontal */
+	/* { */
+		/* height: 5px; */
+		/* background-color: #FECC01; */
+		/* border-radius: 99px; */
+		/* position: relative; */
+		/* left: 47.5px; */
+	/* } */
+	.pathLineVertical
+	{
+		width: 30px;
+		height: 200px;
+		background-color: #555555;
+		border-radius: 99px;
+		margin-left: 64px;
+		position: relative;
+		right: 30px;
+		top: 12.5px;
+		transform: translateZ(-1px);
+	}
+	.pathPicture
+	{
+		width: 55px; 
+		height: 55px;
+	}
+	.pathFlexMain
+	{
+		display: flex; 
+		width: 300px; 
+		height: 70px; 
+	}
+	.pathFlex1
+	{
+		display: flex;
+		width: 100px;
+		height: 70px;
+		flex-direction: column;
+	}
+	.pathFlex2
+	{
+		display: flex;
+		width: 59px;
+		height: 59px;
+		flex-direction: column;
+		border: 2px solid #73AD21;
+		border-radius: 3px;
+	}
