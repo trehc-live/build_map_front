@@ -31,7 +31,8 @@
 	
 	.point_selector 
 	{
-		height: calc(100vh - 181px);
+		height: calc(100vh - (42px + 20px + 118px));
+
 		border-spacing: 0 3px;
 	}
 	
