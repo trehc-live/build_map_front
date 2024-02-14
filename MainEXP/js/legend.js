@@ -102,34 +102,29 @@
 					if (id != 0)
 					{
 						document.getElementById('circl' + id).style.backgroundColor = colors.circle_blue;
-						change_color(circle_group, "circle", "fill", colors.circle_blue, id);
 					}
 					else
 					{
 						document.getElementById('circl' + id).style.backgroundColor = colors.circle_light_green;
-						change_color(circle_group, "circle", "fill", colors.circle_light_green, id);
 					}
 					
 					if(id != i)
 					{
 						document.getElementById('circl' + id).firstChild.style.backgroundColor = colors.road_blue;
-						change_color(road_group, "line", "stroke", colors.road_blue, id);
 					}			
 				}
+				
 				for(let id = i + 1; id < legend_len; id++)
 				{
 					document.getElementById('circl' + id).style.backgroundColor = colors.circle_gray
-					change_color(circle_group, "circle", "fill", colors.circle_gray, id);
 					
 					if(id != legend_len - 1)
 					{
 						document.getElementById('circl' + id).firstChild.style.backgroundColor = colors.road_gray;
-						change_color(road_group, "line", "stroke", colors.road_gray, id);
 					}
 					if(id == i + 1)
 					{
 						document.getElementById('circl' + (id - 1)).firstChild.style.backgroundColor = colors.road_gray;
-						change_color(road_group, "line", "stroke", colors.road_gray, id - 1);
 					}
 				}
 				legend_current = i;
@@ -139,18 +134,15 @@
 				if (i != 0)
 				{
 					document.getElementById('circl' + i).style.backgroundColor = colors.circle_gray;
-					change_color(circle_group, "circle", "fill", colors.circle_gray, i);
 				}
 				else
 				{
 					document.getElementById('circl' + i).style.backgroundColor = colors.circle_dark_green;
-					change_color(circle_group, "circle", "fill", colors.circle_dark_green, i);
 				}
 				
 				if(i > 0)
 				{
 					document.getElementById('circl' + (i - 1)).firstChild.style.backgroundColor = colors.road_gray;
-					change_color(road_group, "line", "stroke", colors.road_gray, i - 1);
 				}
 				legend_current = i - 1;
 			}
