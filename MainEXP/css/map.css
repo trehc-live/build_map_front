@@ -39,3 +39,21 @@ svg
 	
 	position: fixed;
 }
+
+.basic_button
+{
+	height: 54px;
+	width: 200px;
+	background-color: gray;
+	flex: 0 0 auto;
+	margin: 3px;
+	list-style: none;
+	border-radius: 20px;
+	font-size: 110%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	
+	padding: 0 10px;
+	cursor: default;	
+}

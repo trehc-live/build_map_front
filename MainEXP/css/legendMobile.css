@@ -62,8 +62,7 @@
 
 	#search_and_legend
 	{
-		position: relative;
-		top: 20px;
+		margin-top: 20px;
 		border-radius: 20px;
 		overflow: hidden;
 	}
